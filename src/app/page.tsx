@@ -6,7 +6,6 @@ export default function Home() {
   return (
     <main>
       <h1>this is the default home page</h1>
-      <Link href="/users">click</Link>
     </main>
   );
 }
