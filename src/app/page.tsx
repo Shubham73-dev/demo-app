@@ -6,6 +6,7 @@ export default function Home() {
   return (
     <main>
       <h1>This is the default home page...</h1>
+      <h2>This is heading second...</h2>
     </main>
   );
 }
