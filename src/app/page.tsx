@@ -1,12 +1,30 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import Link from "next/link";
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
+const Auth = () => {
+  const [authorize, setAuthorize] = useState(false);
+  const [token, setToken] = useState<string>("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const storedToken = window.localStorage.getItem("token") || "";
+    setToken(storedToken);
+    setAuthorize(!!token);
+
+    if (!authorize) {
+      router.push("/login");
+    } else {
+      router.push("/");
+    }
+  }, [token, authorize, router]);
+
   return (
-    <main>
-      <h1>This is the default home page...</h1>
-      <h2>This is heading second...</h2>
-    </main>
+    <div>
+      {!authorize && <h2>Verifying....</h2>}
+      {authorize && <h2>Welcome...</h2>}
+    </div>
   );
-}
+};
+
+export default Auth;
