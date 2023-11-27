@@ -1,19 +1,25 @@
 // axiosInstance.ts
-import axiosCommon from "./common/common";
 import { AxiosInstance } from "axios";
+import axiosCommon from "./common/common";
 
-// Create Axios instance without using await
 const axiosInstance: AxiosInstance = axiosCommon;
 
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
-  (config: any) => {
-    // Do something before request is sent
-    console.log("Request Interceptor:", config);
+  (config) => {
+    const accessToken = window.localStorage.getItem("token");
+
+    if (accessToken) {
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
+      console.log(`Bearer ${accessToken}`, "heloooo");
+    }
+
+    config.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+
+    console.log("heloooo", config.baseURL);
     return config;
   },
-  (error: any) => {
-    // Do something with request error
+  (error) => {
     console.error("Request Error Interceptor:", error);
     return Promise.reject(error);
   }
@@ -21,13 +27,25 @@ axiosInstance.interceptors.request.use(
 
 // Add a response interceptor
 axiosInstance.interceptors.response.use(
-  (response: any) => {
-    // Do something with the response data
-    console.log("ointercepeorjvneircbn", response);
+  (response) => {
+    console.log("Response Interceptor:", response);
     return response;
   },
-  (error: any) => {
-    // Do something with response error
+  (error) => {
+    switch (error.response?.status) {
+      case 401:
+        // Clear localStorage and redirect to login
+        localStorage.clear();
+        document.location.href = "/login";
+        break;
+      case 400:
+        alert(error.response.data.error.message);
+        break;
+      default:
+        // Handle other errors
+        break;
+    }
+
     console.error("Response Error Interceptor:", error);
     return Promise.reject(error);
   }

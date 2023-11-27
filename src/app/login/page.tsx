@@ -34,7 +34,7 @@ const LoginForm = () => {
         router.push("/");
       }
     } catch (error) {
-      alert("Wrong credentials");
+      console.log("error:", error);
     }
   };
 
