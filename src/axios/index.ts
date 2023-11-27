@@ -1,18 +1,18 @@
 // axiosInstance.ts
-import axios, { AxiosInstance } from "axios";
+import axiosCommon from "./common/common";
+import { AxiosInstance } from "axios";
 
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-
-const axiosInstance: AxiosInstance = axios.create({ baseURL });
+// Create Axios instance without using await
+const axiosInstance: AxiosInstance = axiosCommon;
 
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
-  (config) => {
+  (config: any) => {
     // Do something before request is sent
     console.log("Request Interceptor:", config);
     return config;
   },
-  (error) => {
+  (error: any) => {
     // Do something with request error
     console.error("Request Error Interceptor:", error);
     return Promise.reject(error);
@@ -21,12 +21,12 @@ axiosInstance.interceptors.request.use(
 
 // Add a response interceptor
 axiosInstance.interceptors.response.use(
-  (response) => {
+  (response: any) => {
     // Do something with the response data
-    console.log("Response Interceptor:", response);
+    console.log("ointercepeorjvneircbn", response);
     return response;
   },
-  (error) => {
+  (error: any) => {
     // Do something with response error
     console.error("Response Error Interceptor:", error);
     return Promise.reject(error);
