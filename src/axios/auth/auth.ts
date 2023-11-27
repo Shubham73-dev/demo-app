@@ -1,4 +1,4 @@
-import axiosInstance from "../common/common";
+import axiosInstance from "../index";
 
 const authenticate = async (props: any) => {
   try {

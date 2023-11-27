@@ -30,8 +30,8 @@ const LoginForm = () => {
       if (response.registered && response.idToken) {
         window.localStorage.setItem("token", response.idToken);
         confirm("Authentication sucessfull, kindly confirm to redirection");
-        const URL = `displayName=${response.displayName}&localId=${response.localId}`;
-        router.push(`/${URL}`);
+        // const URL = `displayName=${response.displayName}&localId=${response.localId}`;
+        router.push("/");
       }
     } catch (error) {
       alert("Wrong credentials");
